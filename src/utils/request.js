@@ -17,7 +17,6 @@ instance.interceptors.request.use(
     if (tokenStr) {
       // 添加身份认证字段
       config.headers.Authorization = `Bearer ${tokenStr}`
-      console.log('ok')
     }
 
     // 展示 loading 效果
