@@ -3,7 +3,7 @@
     <!-- 循环渲染文章的列表 -->
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :disabled="finished">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" :immediate-check="false">
-        <art-item v-for="item in artlist" :key="item.id" :article="item" ></art-item>
+        <art-item v-for="item in artlist" :key="item.id" :article="item" @remove-article='removeArticle'></art-item>
       </van-list>
     </van-pull-refresh>
   </div>
@@ -71,6 +71,15 @@ export default {
     },
     onRefresh() {
       this.initArtList(true)
+    },
+    // 从文章列表中移除指定 id 的文章
+    removeArticle(id) {
+      // 对原数组进行 filter 方法过滤  (炸楼操作)
+      this.artlist = this.artlist.filter(item => item.art_id.toString() !== id)
+      // 判断剩余数据的文章数量是否小于 10
+      if (this.artlist.length < 10) {
+        this.initArtList()
+      }
     }
   },
   created() {
