@@ -14,7 +14,9 @@
 
     <!-- 频道列表的标签页 -->
     <van-tabs sticky offset-top="1.22666667rem" v-model="active" >
-      <van-tab v-for="item in userChannel" :key="item.id" :title="item.name" >{{ item.name }}</van-tab>
+      <van-tab v-for="item in userChannel" :key="item.id" :title="item.name" >
+        <art-list :channel-id="item.id" ></art-list>
+      </van-tab>
     </van-tabs>
 
     <!-- 频道管理的小图标 -->
@@ -24,9 +26,13 @@
 
 <script>
 import { getUserChannelAPI } from '@/api/homeAPI'
+import ArtList from '@/components/ArtList/ArtList.vue'
 
 export default {
   name: 'HomePage',
+  components: {
+    ArtList
+  },
   data() {
     return {
       // 标签页激活项的索引
