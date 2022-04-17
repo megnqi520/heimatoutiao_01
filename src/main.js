@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import Vant, { Lazyload } from 'vant'
+import Vant, { Lazyload, Notify } from 'vant'
 import 'vant/lib/index.less'
 import 'amfe-flexible'
 
@@ -24,6 +24,8 @@ Vue.config.productionTip = false
 Vue.use(Vant)
 // 图片懒加载
 Vue.use(Lazyload)
+// Notify 消息通知
+Vue.use(Notify)
 
 // dt 参数是文章的发表时间
 Vue.filter('dateFormat', dt => {
