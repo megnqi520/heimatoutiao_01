@@ -5,7 +5,7 @@
 
     <!-- 文章的 Item 项 -->
     <van-list v-model="loading" :finished="finished" finished-text="没有更多数据了" @load="onLoad" :immediate-check="false">
-      <art-item v-for="item in searchList" :key="item.art_id" :article="item" :closable="false"></art-item>
+      <art-item v-for="item in searchList" :key="item.art_id.toString()" :article="item" :closable="false"></art-item>
     </van-list>
   </div>
 </template>
