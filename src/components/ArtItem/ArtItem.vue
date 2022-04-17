@@ -20,23 +20,12 @@
         <div class="label-box">
           <span>作者 {{ article.aut_name }}&nbsp;&nbsp; {{ article.comm_count }} 评论 &nbsp;&nbsp; 发布日期 {{ article.pubdate | dateFormat }}</span>
           <!-- 关闭按钮 -->
-          <van-icon name="cross" @click.stop="show1 = true"/>
+          <van-icon name="cross" v-if="closable" @click.stop="show1 = true"/>
         </div>
       </template>
     </van-cell>
 
     <!-- 反馈的动作面板 -->
-    <!-- <van-action-sheet v-model="show" cancel-text="取消" :closeable="false" @closed="isFirst = true"> -->
-      <!-- 第一级反馈面板 -->
-      <!-- <div v-if="isFirst">
-        <van-cell :title="item.name" clickable class="center-title" v-for="item in actions" :key="item.name" @click="onCellClick(item.name)"/>
-      </div> -->
-      <!-- 第二级反馈面板 -->
-      <!-- <div v-else>
-      <van-cell cancel-text="返回" clickable title-class="center-title" @click="isFirst = true" />
-      <van-cell :title="item.label" clickable title-class="center-title" v-for="item in reports" :key="item.type" />
-    </div>
-    </van-action-sheet> -->
     <!-- 第一级反馈面板 -->
     <van-action-sheet v-model="show1" :actions="actions" cancel-text="取消" close-on-click-action get-container="body" @select="onSelect1"/>
     <!-- 第二级反馈面板 -->
@@ -55,6 +44,11 @@ export default {
     article: {
       type: Object,
       required: true
+    },
+    // 是否展示关闭按钮
+    closable: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
