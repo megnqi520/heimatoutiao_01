@@ -38,14 +38,21 @@
         <van-button icon="good-job-o" type="danger" plain size="small" v-else @click="setLike">点赞</van-button>
       </div>
     </div>
+
+    <!-- 文章的评论组件 -->
+    <art-cmt :artId="id"></art-cmt>
   </div>
 </template>
 
 <script>
 import { getArticleDetailAPI, followUserAPI, unfollowUserAPI, addLikeAPI, disLikeAPI } from '@/api/articleAPI.js'
+import ArtCmt from '@/components/ArtCmt/ArtCmt.vue'
 
 export default {
   name: 'ArticleDetail',
+  components: {
+    ArtCmt
+  },
   props: ['id'],
   data() {
     return {
