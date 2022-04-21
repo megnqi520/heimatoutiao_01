@@ -53,8 +53,12 @@ export default {
 
       // 判断是否登录成功
       if (res.message === 'OK') {
+        // 1. 把登录成功的结果,存储到 vuex 中
         this.updataTokenInfo(res.data)
-        this.$router.push('/')
+
+        // 2.要跳转到首页
+        const navPath = this.$route.query.pre || '/'
+        this.$router.replace(navPath)
       }
     }
   }
