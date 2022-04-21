@@ -1,12 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import { getUserInfoAPI, getUserProfileAPI } from '@/api/userAPI.js'
+
 Vue.use(Vuex)
 
 // 初始的 state 对象
 let initState = {
   // token 的信息对象
-  tokenInfo: {}
+  tokenInfo: {},
+  // 用户的基本信息
+  userInfo: {},
+  // 用户的简介信息
+  userProfile: {}
 }
 
 const stateStr = localStorage.getItem('state')
@@ -38,9 +44,45 @@ export default new Vuex.Store({
     // 将 state 持久化存储到本地
     saveStateStorage(state) {
       localStorage.setItem('state', JSON.stringify(state))
+    },
+    // 更新 userInfo 的方法
+    updataUserInfo(state, payload) {
+      // 把用户信息转存到 state 中
+      state.userInfo = payload
+      // 将最新的 state 对象持久化存储到本地
+      this.commit('saveStateStorage')
+    },
+    // 清空 vuex 和本地的数据
+    cleanState(state) {
+      // 1.清空 vuex 中的数据
+      state.tokenInfo = {}
+      state.userInfo = {}
+      state.userProfile = {}
+      // 2.将清空后的 state 存储到本地
+      this.commit('saveStateStorage')
+    },
+    // 更新用户简介的方法
+    updateUserProfile(state, payload) {
+      state.userProfile = payload
+      this.commit('saveStateStorage')
     }
   },
   actions: {
+    async initUserInfo(ctx) {
+      const { data: res } = await getUserInfoAPI()
+      if (res.message === 'OK') {
+        // TODO: 把数据转交给 Mutation 方法 ctx.commit('Mutation方法名')
+        ctx.commit('updataUserInfo', res.data)
+      }
+    },
+    // 初始化用户的简介信息
+    async initUserProfile(ctx) {
+      const { data: res } = await getUserProfileAPI()
+      if (res.message === 'OK') {
+        // TODO: 把数据转交给 Mutation 方法 ctx.commit('Mutation方法名')
+        ctx.commit('updateUserProfile', res.data)
+      }
+    }
   },
   modules: {
   }
