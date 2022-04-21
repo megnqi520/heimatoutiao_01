@@ -9,6 +9,7 @@ import Search from '@/views/Search/SearchPage.vue'
 import SearchResult from '@/views/SearchResult/SearchResult.vue'
 import ArticleDetail from '@/views/ArticleDetail/ArticleDetail.vue'
 import UserEdit from '@/views/UserEdit/UserEdit.vue'
+import Chat from '@/views/Chat/ChatPage.vue'
 
 Vue.use(VueRouter)
 
@@ -29,7 +30,9 @@ const routes = [
   // 文章详情的路由规则
   { path: '/article/:id', component: ArticleDetail, name: 'art-detail', props: true },
   // 编辑用户资料的路由规则
-  { path: '/user/edit', component: UserEdit, name: 'user-edit' }
+  { path: '/user/edit', component: UserEdit, name: 'user-edit' },
+  // 小思聊天的路由规则
+  { path: '/chat', component: Chat, name: 'chat' }
 ]
 
 const router = new VueRouter({
