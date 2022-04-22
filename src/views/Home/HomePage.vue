@@ -13,7 +13,7 @@
     </van-nav-bar>
 
     <!-- 频道列表的标签页 -->
-    <van-tabs sticky offset-top="1.22666667rem" v-model="active" >
+    <van-tabs sticky offset-top="1.22666667rem" v-model="active" :before-change="beforeTabsChange" @change="onTabsChange">
       <van-tab v-for="item in userChannel" :key="item.id" :title="item.name" >
         <art-list :channel-id="item.id" ></art-list>
       </van-tab>
@@ -89,6 +89,9 @@
 import { getUserChannelAPI, getAllChannelAPI, updateUserChannelAPI } from '@/api/homeAPI'
 import ArtList from '@/components/ArtList/ArtList.vue'
 
+// "频道名称"和"滚动条位置"之间的对应关系, 格式 { '推荐': 211, 'html': 30, '开发者资讯': 890 }
+const nameToTop = {}
+
 export default {
   name: 'HomePage',
   components: {
@@ -160,6 +163,23 @@ export default {
         // 关闭 popup 弹出层
         this.show = false
       }
+    },
+    // tabs 发生切换之前，触发此方法
+    beforeTabsChange() {
+      // 把当前"频道名称"对应的"滚动条位置"记录到 nameToTop 对象中
+      const name = this.userChannel[this.active].name
+      nameToTop[name] = window.scrollY
+
+      // return true 表示允许进行标签页的切换
+      return true
+    },
+    // 当 tabs 切换完毕之后，触发此方法
+    onTabsChange() {
+      // 等 DOM 更新完毕之后，根据记录的"滚动条位置"，调用 window.scrollTo() 方法进行滚动
+      this.$nextTick(() => {
+        const name = this.userChannel[this.active].name
+        window.scrollTo(0, nameToTop[name] || 0)
+      })
     }
   },
   created() {
@@ -183,6 +203,11 @@ export default {
         }
       })
     }
+  },
+  // 导航离开该组件的对应路由时调用   可以访问组件实例 `this`
+  beforeRouteLeave(to, from, next) {
+    from.meta.top = window.scrollY
+    next()
   }
 }
 </script>

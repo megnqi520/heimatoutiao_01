@@ -47,6 +47,7 @@
 <script>
 import { getArticleDetailAPI, followUserAPI, unfollowUserAPI, addLikeAPI, disLikeAPI } from '@/api/articleAPI.js'
 import ArtCmt from '@/components/ArtCmt/ArtCmt.vue'
+import hljs from 'highlight.js'
 
 export default {
   name: 'ArticleDetail',
@@ -98,6 +99,25 @@ export default {
   },
   created() {
     this.initArticle()
+  },
+  watch: {
+    id() {
+      this.article = null
+      this.initArticle()
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    from.meta.top = window.scrollY
+    setTimeout(() => {
+      next()
+    }, 0)
+  },
+  // 当组件的 DOM 更新完毕之后
+  updated() {
+    // 判断是否有文章的内容
+    if (this.article) {
+      hljs.highlightAll()
+    }
   }
 }
 </script>

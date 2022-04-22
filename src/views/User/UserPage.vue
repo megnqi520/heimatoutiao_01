@@ -75,6 +75,9 @@ export default {
     }
   },
   created() {
+    // this.initUserInfo()
+  },
+  activated() {
     this.initUserInfo()
   },
   computed: {

@@ -24,16 +24,21 @@ const routes = [
     path: '/',
     component: Main,
     children: [
-      { path: '', component: Home, name: 'home' },
+      {
+        path: '',
+        component: Home,
+        name: 'home',
+        meta: { isRecord: true, top: 0 }
+      },
       { path: 'user', component: User, name: 'user' }
     ]
   },
   // 搜索组件的路由规则
   { path: '/search', component: Search, name: 'search' },
   // 搜索结果页
-  { path: '/search/:kw', component: SearchResult, name: 'search-result', props: true },
+  { path: '/search/:kw', component: SearchResult, name: 'search-result', props: true, meta: { isRecord: true, top: 0 } },
   // 文章详情的路由规则
-  { path: '/article/:id', component: ArticleDetail, name: 'art-detail', props: true },
+  { path: '/article/:id', component: ArticleDetail, name: 'art-detail', props: true, meta: { isRecord: true, top: 0 } },
   // 编辑用户资料的路由规则
   { path: '/user/edit', component: UserEdit, name: 'user-edit' },
   // 小思聊天的路由规则
@@ -60,6 +65,17 @@ router.beforeEach((to, from, next) => {
   } else {
     // 访问的是没有权限的页面
     next()
+  }
+})
+
+// 全局后置钩子
+router.afterEach((to, from) => {
+  // 如果当前的路由的元信息中，isRecord 的值为 true
+  if (to.meta.isRecord) {
+    setTimeout(() => {
+      // 则把元信息中的 top 值设为滚动条纵向滚动的位置
+      window.scrollTo(0, to.meta.top)
+    }, 0)
   }
 })
 
