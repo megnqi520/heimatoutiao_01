@@ -46,7 +46,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updataTokenInfo']),
+    ...mapMutations(['updateTokenInfo']),
     async login() {
       // 只有当表单数据校验通过后,才会调用此login函数
       const { data: res } = await loginAPI(this.form)
@@ -54,7 +54,7 @@ export default {
       // 判断是否登录成功
       if (res.message === 'OK') {
         // 1. 把登录成功的结果,存储到 vuex 中
-        this.updataTokenInfo(res.data)
+        this.updateTokenInfo(res.data)
 
         // 2.要跳转到首页
         const navPath = this.$route.query.pre || '/'

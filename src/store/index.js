@@ -45,7 +45,7 @@ export default new Vuex.Store({
   },
   mutations: {
     // 更新 tokenInfo 数据的方法
-    updataTokenInfo(state, payload) {
+    updateTokenInfo(state, payload) {
       // 把提交过来的 payload 对象, 作为 tokenInfo 的值
       state.tokenInfo = payload
 
@@ -58,7 +58,7 @@ export default new Vuex.Store({
       localStorage.setItem('state', JSON.stringify(state))
     },
     // 更新 userInfo 的方法
-    updataUserInfo(state, payload) {
+    updateUserInfo(state, payload) {
       // 把用户信息转存到 state 中
       state.userInfo = payload
       // 将最新的 state 对象持久化存储到本地
@@ -84,7 +84,7 @@ export default new Vuex.Store({
       const { data: res } = await getUserInfoAPI()
       if (res.message === 'OK') {
         // TODO: 把数据转交给 Mutation 方法 ctx.commit('Mutation方法名')
-        ctx.commit('updataUserInfo', res.data)
+        ctx.commit('updateUserInfo', res.data)
       }
     },
     // 初始化用户的简介信息

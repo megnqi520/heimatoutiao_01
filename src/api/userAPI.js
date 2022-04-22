@@ -1,4 +1,16 @@
 import request from '@/utils/request.js'
+import axios from 'axios'
+
+// 换取 Token 的 API(形参中的 refreshToken 用来换取新 token)
+export const exchangeTokenAPI = refreshToken => {
+  return axios({
+    method: 'PUT',
+    url: 'http://www.liulongbin.top:8000/v1_0/authorizations',
+    headers: {
+      Authorization: 'Bearer ' + refreshToken
+    }
+  })
+}
 
 // 登录的 API 接口
 export const loginAPI = data => {
